@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invest Together</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:#0E2E2A; --ink-soft:#1A423C;
+  --paper:#F3F0E5; --paper-hi:#FBF9F2;
+  --marigold:#E39B2C; --brick:#A34A2E; --moss:#4F7346;
+  --teal:#2E7D74; --plum:#7A4A63; --sand:#C9B27C;
+  --rule:rgba(14,46,42,.14); --rule-strong:rgba(14,46,42,.32);
+  --display:"Bricolage Grotesque",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --wrap:1120px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+.wrap{width:min(var(--wrap),100% - 2.5rem);margin-inline:auto}
+
+.masthead{background:var(--ink);color:var(--paper-hi);padding:2.75rem 0 2.25rem;border-bottom:3px solid var(--marigold)}
+.masthead h1{font-family:var(--display);font-weight:800;font-size:clamp(2.6rem,9vw,5.5rem);line-height:.92;letter-spacing:-.035em;margin:0;text-transform:uppercase}
+.masthead p{margin:.9rem 0 0;max-width:52ch;font-size:1.02rem;color:rgba(251,249,242,.78)}
+.masthead .fineprint{margin-top:1.4rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--marigold)}
+
+/* ── The gate ───────────────────────────────── */
+#gate{padding:3.5rem 0 2rem}
+.gatecard{max-width:34rem;border:1px solid var(--rule-strong);background:var(--paper-hi);border-radius:2px;padding:1.75rem}
+.gatecard h2{font-family:var(--display);font-weight:800;font-size:1.5rem;margin:0 0 .4rem;letter-spacing:-.02em}
+.gatecard p{margin:0 0 1.2rem;color:var(--ink-soft);opacity:.85;font-size:.95rem}
+.gateform{display:flex;gap:.6rem;flex-wrap:wrap}
+.gateform input{flex:1 1 13rem;font-family:var(--mono);font-size:.95rem;padding:.65rem .75rem;border:1px solid var(--rule-strong);border-radius:2px;background:var(--paper);color:var(--ink)}
+.gateform button{font-family:var(--mono);font-size:.85rem;font-weight:600;padding:.65rem 1.3rem;border:none;border-radius:2px;background:var(--ink);color:var(--paper-hi);cursor:pointer}
+.gateform button:hover{background:var(--ink-soft)}
+#gateMsg{margin:.9rem 0 0;font-family:var(--mono);font-size:.78rem;color:var(--brick);min-height:1.2em}
+
+.lockbar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-top:1.6rem;padding-top:1.4rem;border-top:1px solid rgba(251,249,242,.16)}
+.lockbtn{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;padding:.5rem .85rem;border-radius:2px;border:1px solid rgba(251,249,242,.3);background:transparent;color:rgba(251,249,242,.85);cursor:pointer}
+.lockbtn:hover{border-color:var(--marigold);color:var(--marigold)}
+body.editing .lockbtn{border-color:var(--marigold);background:var(--marigold);color:var(--ink);font-weight:600}
+#lockForm{display:flex;gap:.5rem;flex-wrap:wrap}
+#lockForm input{font-family:var(--mono);font-size:.8rem;padding:.45rem .6rem;border:1px solid rgba(251,249,242,.3);border-radius:2px;background:rgba(251,249,242,.08);color:var(--paper-hi);min-width:11rem}
+#lockForm button{font-family:var(--mono);font-size:.75rem;font-weight:600;padding:.45rem .9rem;border:none;border-radius:2px;background:var(--marigold);color:var(--ink);cursor:pointer}
+#lockMsg{font-family:var(--mono);font-size:.72rem;color:var(--marigold)}
+
+section.block{padding:3rem 0 1rem}
+section.block + section.block{padding-top:1.5rem}
+.eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);opacity:.65;margin:0 0 .35rem}
+.block h2{font-family:var(--display);font-weight:800;letter-spacing:-.02em;font-size:clamp(1.5rem,3.4vw,2.1rem);margin:0 0 .25rem}
+.block .lede{margin:0 0 1.4rem;max-width:64ch;color:var(--ink-soft);opacity:.85}
+
+.pool{background:var(--ink);color:var(--paper-hi);border-radius:2px;padding:1.75rem 1.75rem 1.5rem;margin-top:.5rem}
+.pool-top{display:flex;flex-wrap:wrap;gap:1.5rem 2.5rem;align-items:baseline}
+.pool-total{font-family:var(--mono);font-weight:600;font-size:clamp(2.1rem,6.5vw,3.4rem);letter-spacing:-.03em;line-height:1}
+.pool-meta{display:flex;gap:2rem;flex-wrap:wrap;margin-left:auto}
+.pool-meta div span{display:block;font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(251,249,242,.55)}
+.pool-meta div strong{font-family:var(--mono);font-weight:500;font-size:1.15rem}
+.bar{display:flex;height:56px;margin-top:1.6rem;border-radius:2px;overflow:hidden;background:rgba(251,249,242,.08)}
+.seg{position:relative;min-width:2px;display:flex;align-items:center;justify-content:center;transform-origin:left;animation:grow .7s cubic-bezier(.22,1,.36,1) both}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.seg span{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;color:var(--ink);padding:0 .35rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.bar-caption{margin-top:.65rem;font-family:var(--mono);font-size:.7rem;color:rgba(251,249,242,.55);letter-spacing:.06em}
+.split-toggle{display:flex;gap:.4rem;align-items:center;margin-top:1.25rem;flex-wrap:wrap}
+.split-toggle > span{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(251,249,242,.55);margin-right:.35rem}
+.split-toggle button{font-family:var(--mono);font-size:.74rem;padding:.4rem .75rem;border-radius:2px;border:1px solid rgba(251,249,242,.28);background:transparent;color:rgba(251,249,242,.8);cursor:pointer}
+.split-toggle button[aria-pressed="true"]{background:var(--marigold);border-color:var(--marigold);color:var(--ink);font-weight:600}
+body:not(.editing) .split-toggle button{cursor:default;pointer-events:none}
+body:not(.editing) .split-toggle button[aria-pressed="false"]{display:none}
+
+.tablecard{background:var(--paper-hi);border:1px solid var(--rule);border-radius:2px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:700px}
+thead th{text-align:left;font-family:var(--mono);font-weight:500;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);padding:.85rem 1rem;border-bottom:1.5px solid var(--rule-strong);white-space:nowrap;background:var(--paper-hi)}
+tbody td{padding:.8rem 1rem;border-bottom:1px solid var(--rule);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:rgba(227,155,44,.07)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.code{font-family:var(--mono);font-weight:600;letter-spacing:.06em}
+.swatch{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:.5rem}
+.muted{color:var(--ink-soft);opacity:.6}
+.sub{display:block;font-size:.74rem;color:var(--ink-soft);opacity:.68;font-family:var(--mono)}
+.pill{display:inline-block;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .55rem;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.pill.open{color:var(--moss);background:rgba(79,115,70,.1)}
+.pill.soon{color:var(--brick);background:rgba(163,74,46,.1)}
+.pill.closed{color:var(--ink-soft);opacity:.55}
+.hist{font-family:var(--mono);font-size:.72rem;color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(46,125,116,.4)}
+.hist:hover{border-bottom-color:var(--teal)}
+
+select.status{font-family:var(--mono);font-size:.75rem;padding:.35rem .5rem;border:1px solid var(--rule-strong);border-radius:2px;background:var(--paper);color:var(--ink);cursor:pointer;max-width:100%}
+select.status[data-tone="go"]{border-color:var(--moss);color:var(--moss);background:rgba(79,115,70,.08);font-weight:600}
+select.status[data-tone="warm"]{border-color:var(--marigold);color:#8a5c10;background:rgba(227,155,44,.13);font-weight:600}
+select.status:disabled{appearance:none;-webkit-appearance:none;opacity:1;cursor:default;padding-left:0;border-color:transparent;background:transparent}
+
+.rm{border:none;background:none;cursor:pointer;color:var(--ink);opacity:.35;font-size:1.05rem;line-height:1;padding:.25rem .4rem;border-radius:2px;font-family:var(--mono)}
+.rm:hover{opacity:1;color:var(--brick)}
+body:not(.editing) .owner-only{display:none}
+
+details.adder{margin-top:1rem;border:1px dashed var(--rule-strong);border-radius:2px}
+details.adder > summary{cursor:pointer;list-style:none;padding:.75rem 1rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+details.adder > summary::-webkit-details-marker{display:none}
+details.adder > summary::before{content:"+ ";color:var(--marigold);font-weight:700}
+details.adder[open] > summary::before{content:"– "}
+.form{display:flex;flex-wrap:wrap;gap:.75rem;padding:0 1rem 1rem}
+.field{display:flex;flex-direction:column;gap:.25rem}
+.field label{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);opacity:.75}
+.field input,.field select{font-family:var(--mono);font-size:.85rem;padding:.45rem .55rem;border:1px solid var(--rule-strong);border-radius:2px;background:var(--paper-hi);color:var(--ink);min-width:8.5rem}
+.field.wide input{min-width:15rem}
+button.go{align-self:flex-end;font-family:var(--mono);font-size:.78rem;font-weight:600;letter-spacing:.06em;padding:.5rem 1rem;border:none;border-radius:2px;background:var(--ink);color:var(--paper-hi);cursor:pointer}
+button.go:hover{background:var(--ink-soft)}
+button.ghost{font-family:var(--mono);font-size:.74rem;padding:.5rem .9rem;border-radius:2px;border:1px solid var(--rule-strong);background:transparent;color:var(--ink);cursor:pointer}
+button.ghost:hover{background:var(--paper-hi)}
+
+.save{margin-top:2.5rem;border-top:1px solid var(--rule);padding-top:1.5rem}
+.save .row{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.save textarea{width:100%;min-height:150px;margin-top:.9rem;font-family:var(--mono);font-size:.7rem;line-height:1.5;padding:.85rem;border:1px solid var(--rule-strong);border-radius:2px;background:var(--paper-hi);color:var(--ink);resize:vertical;word-break:break-all}
+.toast{font-family:var(--mono);font-size:.74rem;color:var(--moss)}
+code{font-family:var(--mono);font-size:.88em;background:rgba(14,46,42,.06);padding:.1em .3em;border-radius:2px}
+
+footer{background:var(--ink);color:rgba(251,249,242,.7);margin-top:3.5rem;padding:2.5rem 0}
+footer h3{font-family:var(--display);color:var(--paper-hi);font-size:1.1rem;margin:0 0 .6rem;letter-spacing:-.01em}
+footer h3 + ul{margin-bottom:1.8rem}
+footer ul{margin:0;padding-left:1.1rem;max-width:72ch;font-size:.9rem}
+footer li{margin-bottom:.4rem}
+footer a{color:var(--marigold)}
+footer .sig{margin-top:1.6rem;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(251,249,242,.4)}
+
+:focus-visible{outline:2px solid var(--marigold);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+@media (max-width:820px){
+  table,thead,tbody,tr,td{display:block;min-width:0}
+  thead{display:none}
+  tbody tr{border-bottom:1.5px solid var(--rule-strong);padding:.5rem 0}
+  tbody tr:last-child{border-bottom:none}
+  tbody td{border-bottom:none;padding:.3rem 1rem;display:grid;grid-template-columns:9rem 1fr;gap:.75rem;align-items:center}
+  tbody td::before{content:attr(data-label);font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);opacity:.6}
+  .pool-meta{margin-left:0}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <h1>Invest Together</h1>
+    <p>Made for family and friends only. Investing together will not guarantee a return — what it does is let us put in bigger chunks than any of us could separately, with every one of us holding a share of the result. No fee, no cut, no profit taken by anyone running it.</p>
+    <div class="fineprint" id="asOf">Private ledger</div>
+
+    <div class="lockbar" id="lockBar" hidden>
+      <button class="lockbtn" id="lockBtn" type="button">Editing locked — unlock</button>
+      <form id="lockForm" hidden>
+        <input type="password" id="lockPass" placeholder="Owner passphrase" autocomplete="current-password">
+        <button type="submit">Unlock</button>
+      </form>
+      <span id="lockMsg" role="status"></span>
+    </div>
+  </div>
+</header>
+
+<!-- ── The gate ─────────────────────────────── -->
+<div id="gate" class="wrap">
+  <div class="gatecard">
+    <h2>The records are locked</h2>
+    <p>Who has put in what, and which IPOs we have applied for, is kept encrypted. Enter the passphrase shared with you to open it.</p>
+    <form class="gateform" id="gateForm">
+      <input type="password" id="gatePass" placeholder="Passphrase" autocomplete="current-password" autofocus>
+      <button type="submit" id="gateBtn">Open</button>
+    </form>
+    <p id="gateMsg" role="status"></p>
+  </div>
+</div>
+
+<main id="app" hidden>
+
+  <section class="block wrap">
+    <p class="eyebrow">Where we stand</p>
+    <h2>The pool</h2>
+    <p class="lede">Every band below is one person. The width is what they put in.</p>
+    <div class="pool">
+      <div class="pool-top">
+        <div>
+          <div class="pool-total" id="poolTotal">₹0</div>
+          <div class="bar-caption" id="poolCaption"></div>
+        </div>
+        <div class="pool-meta">
+          <div><span>Members</span><strong id="mCount">0</strong></div>
+          <div><span>Largest share</span><strong id="mMax">—</strong></div>
+          <div><span>Average</span><strong id="mAvg">—</strong></div>
+        </div>
+      </div>
+      <div class="bar" id="poolBar" role="img" aria-label="Contributions by member"></div>
+      <div class="bar-caption" id="barLegend"></div>
+      <div class="split-toggle">
+        <span>Returns split</span>
+        <button type="button" data-split="proportional" aria-pressed="true">In proportion to amount</button>
+        <button type="button" data-split="equal" aria-pressed="false">Equally per member</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="block wrap">
+    <p class="eyebrow">Who is in</p>
+    <h2>Investors</h2>
+    <p class="lede">Code names only. Even behind the passphrase, nobody's real name goes on this page.</p>
+    <div class="tablecard">
+      <table>
+        <thead><tr><th>Code name</th><th>Amount in</th><th>Share of pool</th><th>Share of returns</th><th>Joined</th><th>Note</th><th></th></tr></thead>
+        <tbody id="investorRows"></tbody>
+      </table>
+    </div>
+    <details class="adder owner-only">
+      <summary>Add an investor</summary>
+      <div class="form">
+        <div class="field"><label for="iCode">Code name</label><input id="iCode" placeholder="KOEL" maxlength="16"></div>
+        <div class="field"><label for="iAmt">Amount (₹)</label><input id="iAmt" type="number" min="0" step="500" placeholder="25000"></div>
+        <div class="field"><label for="iDate">Joined</label><input id="iDate" type="date"></div>
+        <div class="field wide"><label for="iNote">Note (optional)</label><input id="iNote" placeholder="Paid by UPI, 3 Aug"></div>
+        <button class="go" id="addInvestor" type="button">Add investor</button>
+      </div>
+    </details>
+  </section>
+
+  <section class="block wrap">
+    <p class="eyebrow">The market</p>
+    <h2>IPOs — open and opening</h2>
+    <p class="lede">Open now sits at the top, then the ones opening soon, then whatever has closed. Status works itself out from the dates. <strong>Lots we can fund</strong> is the pool divided by the cost of one lot at the upper price.</p>
+    <div class="tablecard">
+      <table>
+        <thead><tr><th>IPO</th><th>Window</th><th>Status</th><th>Price band</th><th>Lot</th><th>Cost per lot</th><th>Lots we can fund</th><th>Applied / applying</th><th></th></tr></thead>
+        <tbody id="ipoRows"></tbody>
+      </table>
+    </div>
+    <details class="adder owner-only">
+      <summary>Add an IPO</summary>
+      <div class="form">
+        <div class="field wide"><label for="pName">Company</label><input id="pName" placeholder="Example Industries Ltd"></div>
+        <div class="field"><label for="pSeg">Segment</label><select id="pSeg"><option>Mainboard</option><option>SME</option></select></div>
+        <div class="field"><label for="pOpen">Opens</label><input id="pOpen" type="date"></div>
+        <div class="field"><label for="pClose">Closes</label><input id="pClose" type="date"></div>
+        <div class="field"><label for="pLow">Price low (₹)</label><input id="pLow" type="number" step="1" placeholder="118"></div>
+        <div class="field"><label for="pHigh">Price high (₹)</label><input id="pHigh" type="number" step="1" placeholder="125"></div>
+        <div class="field"><label for="pLot">Shares in a lot</label><input id="pLot" type="number" step="1" placeholder="120"></div>
+        <div class="field wide"><label for="pUrl">Reference link (optional)</label><input id="pUrl" placeholder="https://..."></div>
+        <button class="go" id="addIpo" type="button">Add IPO</button>
+      </div>
+    </details>
+  </section>
+
+  <section class="block wrap owner-only">
+    <div class="save">
+      <p class="eyebrow">Keeping your changes</p>
+      <h2 style="font-size:1.25rem;margin-bottom:.4rem">Save back to GitHub</h2>
+      <p class="lede" style="margin-bottom:1rem">Edits live only in this browser tab. To keep them, produce a new encrypted block below and paste it over the <code>const ENCRYPTED = "…";</code> line near the bottom of <code>index.html</code>, then commit.</p>
+      <div class="form" style="padding:0 0 1rem">
+        <div class="field wide"><label for="newPass">Encrypt with (leave blank to keep the current passphrase)</label><input id="newPass" type="text" placeholder="new viewing passphrase"></div>
+      </div>
+      <div class="row">
+        <button class="ghost" id="copyData" type="button">Make encrypted block</button>
+        <span class="toast" id="toast"></span>
+      </div>
+      <textarea id="dataOut" spellcheck="false" hidden aria-label="Encrypted block to paste into index.html"></textarea>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <h3>Who can see the records</h3>
+    <ul>
+      <li>The investor and IPO tables are stored <strong>encrypted</strong> inside this page. Without the passphrase there is nothing readable in the file — not by opening the page, not by viewing its source, not by downloading it from GitHub.</li>
+      <li>Anyone you give the passphrase to can read everything. There are no separate logins and no way to revoke one person. If it gets passed around, change it and commit a fresh encrypted block.</li>
+      <li>Editing needs a second, owner-only passphrase, and even then changes are only real once they are committed to the repository — which only the owner can do.</li>
+    </ul>
+
+    <h3>Before anyone sends money, three things everyone should know</h3>
+    <ul>
+      <li><strong>One PAN can submit only one application per IPO.</strong> Duplicate applications on the same PAN get rejected, so a pool cannot multiply anyone's chances of allotment by applying many times under one name.</li>
+      <li><strong>Shares land in one person's demat account.</strong> Whoever applies legally holds them. Write down what everyone has agreed, in plain language, and keep a copy.</li>
+      <li><strong>Pooling other people's money to invest carries rules.</strong> In India that can bring in SEBI regulation depending on how it is run. Worth an hour with a chartered accountant before the first rupee moves. This page is a record book, not advice — I'm not a financial adviser or a lawyer.</li>
+    </ul>
+    <div class="sig">Invest Together · family and friends only · no profit taken</div>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   1. OWNER PASSPHRASE — lets you edit. Only you should have it.
+   Default is "change-me". To set your own, run:
+       printf '%s' 'your phrase' | shasum -a 256
+   and paste the result below.
+   ═══════════════════════════════════════════════════════════════ */
+const PASS_HASH = "e2186dbdb1bb4193608605e84f33208765b5693b55edd4f730a719a100eeea6f";
+
+/* ═══════════════════════════════════════════════════════════════
+   2. THE RECORDS — encrypted with the VIEWING passphrase, which is
+   the one you share with family. Default is "family-only".
+   Do not edit this by hand. To change it: unlock the page, edit in
+   the browser, press "Make encrypted block", and paste the result
+   over the line below.
+   ═══════════════════════════════════════════════════════════════ */
+const ENCRYPTED = "begNZtBE5v1gUuWwoxZ5New51uWp4wj7UrPsSGWJL7m8nj2v1kYqX64bRFNW6cW5d0wLGauw2fu5e3BXwYsGWLdmCfNaFtCSbwmrC6+oLu+VzxlDOU9pqQPEwXcQ+gyXOkJsBc/LN4q3UPzrMNVmErFI9Iiid9yIOD9HfQSvy+j7JQsD2jFFWmH5nHPr2eIzkiXF8V5QYJ6ZmIz6tqKIJxctVkpR9hadg0u1VcJ5OKDMno5+lg3lbvNy10cM7fx7w51WJZ7gF+NUMnzx8kugHayOo2Zgs6V0OaWOK2ZpOgQzD3J4U3CWTX90wsHvA8F9y1pqk4JVkw9IGkx5WCoRBRcjHO8Mo1U11yvA97qYpGAP0mtWekUwgxDrXwNV+3viV5ctRw/61fvldiM3sBT50J1oiALEEnA8U5Ckczq73Ke4aL3TWi+0gFf+zMRsRDxboMV2amiKdddtYVJbRgUuaWNpRsiTKBCxNnccFYD9gJBqLb1+wfw+y+rePhwBa9gn+eSCQjl4RSNKfe1Zl0K+RzFDGmK/arOnXQJY7wP0BOrms85qtpez+yf82v7y5ywHD8XLDfdW0ik6OJSth8kLXfppjjwKUUk9JlqG14KjnmLMoZSucl08h3fCaanhkkzSTFt46gr99cYM8c8VkOu5k5+IQq+H6Il6C1wHifZoDE5n5SpWwsubdQqhASShuHkRT1tU/XCAX2wvVJPDI4R6DZ/TkHVGUhjmqR1C2MwdJa+5vw1riSMrMt3ikkMkNUvfAQQLpICezGeP0TO73eqWakmcRGmlShyY5X9221KfvOXlyC36Lesw6nLoGADaFgERYgnzZevrozggHJ6q2PKb/e9yTnH9lJsbP0S2fuonn55Hiz8xzajdG4qG79u9pc8Xq+Q/ST+jkiXpF0xM6F9pcxS8eJtO2W1L7NiqBrtjm7k+024FFdV+eNyDQIi3RSbuJBEBB2rvdW3mXSC81PfpsgJhMOkkr6TDQm+2fI4CV3Z1sMlmT4HIaI3MWdGQ/U1WxyE4x8O+31AS9ENllLnwXzsQPiniZzMcMTbW8BlTZbbvEE8IQLJjr7QYxM5ASN97+oJs5/ha5ZmUeLl/JGoNl24Llijh0h63BUmEIA1kMYgP4M32O+qhUhFS7kLVey3jmLQ6oW+a9jpbnf44q32/jLBHk/ABo/2LCzc2gr6aVT5WeOJRMkh+VZF72gSQMPGrnvspTHdPuWTUW6vd/bMPUMzqEgDy2Azwvh6qVauYs2/dixnHuqjmPBuFFfPmv5OIwfaGQ8VZwZvvuOiM0ayUFQ04e5rarWJtCBq0NzyYyrQA1s8CVIEJklyG4pApla3/0ZOfOV6ZbbybzHGelQmJ5d5qt3tXhMGR1NvFHvV7DIH+d0Mi/6nh5ir6x08IdLOTLHCjkLL1bkqb+wPuaDWErvKYHMJCnBk3M11X";
+/* ══════════════════════════════════════════════════════════════ */
+
+let DATA = null;
+let VIEW_PASS = null;
+const EDIT = { on:false };
+const PALETTE = ["#E39B2C","#4F7346","#A34A2E","#2E7D74","#7A4A63","#C9B27C"];
+const STATUSES = ["Not applied","Applying","Applied","Allotted","Not allotted","Skipped"];
+const $ = id => document.getElementById(id);
+
+const rupees = n => "₹" + Math.round(n || 0).toLocaleString("en-IN");
+const compact = n => n >= 1e7 ? "₹" + (n/1e7).toFixed(2) + " cr" : n >= 1e5 ? "₹" + (n/1e5).toFixed(2) + " L" : rupees(n);
+const today = () => { const d = new Date(); d.setHours(0,0,0,0); return d; };
+const todayISO = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); };
+const parseDate = s => { const d = new Date(s + "T00:00:00"); return isNaN(d) ? null : d; };
+const prettyDate = s => { const d = parseDate(s); return d ? d.toLocaleDateString("en-IN",{day:"numeric",month:"short"}) : "—"; };
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const poolTotal = () => DATA.investors.reduce((s,i) => s + (Number(i.amount)||0), 0);
+
+/* ── Crypto: PBKDF2-SHA256 (250k) + AES-GCM ──────────────────── */
+const b64decode = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+function b64encode(bytes){
+  let out = "";
+  for (let i = 0; i < bytes.length; i++) out += String.fromCharCode(bytes[i]);
+  return btoa(out);
+}
+async function deriveKey(pass, salt){
+  const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pass), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey(
+    { name:"PBKDF2", salt, iterations:250000, hash:"SHA-256" },
+    base, { name:"AES-GCM", length:256 }, false, ["encrypt","decrypt"]);
+}
+async function decryptRecords(pass){
+  const raw = b64decode(ENCRYPTED);
+  const key = await deriveKey(pass, raw.slice(0,16));
+  const plain = await crypto.subtle.decrypt({ name:"AES-GCM", iv: raw.slice(16,28) }, key, raw.slice(28));
+  return JSON.parse(new TextDecoder().decode(plain));
+}
+async function encryptRecords(pass, obj){
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const key = await deriveKey(pass, salt);
+  const ct = new Uint8Array(await crypto.subtle.encrypt({ name:"AES-GCM", iv }, key, new TextEncoder().encode(JSON.stringify(obj))));
+  const out = new Uint8Array(28 + ct.length);
+  out.set(salt, 0); out.set(iv, 16); out.set(ct, 28);
+  return b64encode(out);
+}
+async function sha256(text){
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
+}
+
+/* ── The gate ────────────────────────────────────────────────── */
+$("gateForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const msg = $("gateMsg"), btn = $("gateBtn"), pass = $("gatePass").value;
+  if (!(window.crypto && window.crypto.subtle)){
+    msg.textContent = "This needs an https page — open the published link, not the file on your computer.";
+    return;
+  }
+  btn.disabled = true; msg.style.color = "var(--ink-soft)"; msg.textContent = "Checking…";
+  try {
+    DATA = await decryptRecords(pass);
+    VIEW_PASS = pass;
+    $("gatePass").value = "";
+    $("gate").hidden = true;
+    $("app").hidden = false;
+    $("lockBar").hidden = false;
+    renderAll();
+  } catch {
+    msg.style.color = "var(--brick)";
+    msg.textContent = "That passphrase does not open the records.";
+    $("gatePass").select();
+  } finally { btn.disabled = false; }
+});
+
+/* ── Rendering ───────────────────────────────────────────────── */
+function ipoPhase(ipo){
+  const t = today(), o = parseDate(ipo.opens), c = parseDate(ipo.closes);
+  if (!o || !c) return { key:"soon", rank:1, label:"Dates missing" };
+  if (t < o){ const d = Math.ceil((o-t)/86400000); return { key:"soon", rank:1, label: d === 1 ? "Opens tomorrow" : "Opens in " + d + " days" }; }
+  if (t <= c){ const d = Math.ceil((c-t)/86400000); return { key:"open", rank:0, label: d === 0 ? "Closes today" : "Open — " + d + "d left" }; }
+  return { key:"closed", rank:2, label:"Closed" };
+}
+function refLink(ipo){
+  if (ipo.link && /^https?:\/\//i.test(ipo.link)) return ipo.link;
+  return "https://www.google.com/search?q=" + encodeURIComponent((ipo.name || "") + " IPO details");
+}
+
+function renderPool(){
+  const total = poolTotal(), list = DATA.investors;
+  $("poolTotal").textContent = rupees(total);
+  $("poolCaption").textContent = total ? compact(total) + " contributed so far" : "nothing in the pool yet";
+  $("mCount").textContent = list.length;
+  const amts = list.map(i => Number(i.amount)||0);
+  $("mMax").textContent = amts.length ? compact(Math.max(...amts)) : "—";
+  $("mAvg").textContent = amts.length ? compact(total/amts.length) : "—";
+  const bar = $("poolBar"); bar.innerHTML = "";
+  if (!total){ $("barLegend").textContent = "Nothing recorded yet."; }
+  else {
+    list.forEach((inv,n) => {
+      const pct = (Number(inv.amount)||0)/total*100;
+      const seg = document.createElement("div");
+      seg.className = "seg";
+      seg.style.width = pct + "%";
+      seg.style.background = PALETTE[n % PALETTE.length];
+      seg.style.animationDelay = (n*0.07) + "s";
+      seg.title = inv.code + " — " + rupees(inv.amount) + " (" + pct.toFixed(1) + "%)";
+      if (pct > 7) seg.innerHTML = "<span>" + esc(inv.code) + "</span>";
+      bar.appendChild(seg);
+    });
+    $("barLegend").textContent = list.length + " " + (list.length === 1 ? "member" : "members") + " · hover a band for the exact amount";
+  }
+  document.querySelectorAll("[data-split]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.split === DATA.returnSplit)));
+}
+
+function renderInvestors(){
+  const total = poolTotal(), n = DATA.investors.length, body = $("investorRows");
+  if (!n){ body.innerHTML = '<tr><td colspan="7" class="muted" style="padding:2rem 1rem">No one has joined yet.</td></tr>'; return; }
+  body.innerHTML = DATA.investors.map((inv,idx) => {
+    const amt = Number(inv.amount)||0;
+    const poolPct = total ? amt/total*100 : 0;
+    const retPct = DATA.returnSplit === "equal" ? 100/n : poolPct;
+    return '<tr>' +
+      '<td data-label="Code name"><span class="swatch" style="background:' + PALETTE[idx % PALETTE.length] + '"></span><span class="code">' + esc(inv.code) + '</span></td>' +
+      '<td data-label="Amount in" class="num">' + rupees(amt) + '</td>' +
+      '<td data-label="Share of pool" class="num">' + poolPct.toFixed(1) + '%</td>' +
+      '<td data-label="Share of returns" class="num">' + retPct.toFixed(1) + '%</td>' +
+      '<td data-label="Joined" class="num muted">' + prettyDate(inv.joined) + '</td>' +
+      '<td data-label="Note" class="muted">' + (esc(inv.note) || '—') + '</td>' +
+      '<td data-label="" class="owner-only"><button class="rm" data-remove-investor="' + idx + '" aria-label="Remove ' + esc(inv.code) + '">&times;</button></td>' +
+    '</tr>';
+  }).join("");
+}
+
+function renderIpos(){
+  const total = poolTotal(), body = $("ipoRows");
+  if (!DATA.ipos.length){ body.innerHTML = '<tr><td colspan="9" class="muted" style="padding:2rem 1rem">No IPOs listed yet.</td></tr>'; return; }
+  const rows = DATA.ipos.map((ipo,idx) => ({ipo, idx, phase: ipoPhase(ipo)}))
+    .sort((a,b) => a.phase.rank - b.phase.rank || String(a.ipo.opens).localeCompare(String(b.ipo.opens)));
+  body.innerHTML = rows.map(({ipo, idx, phase}) => {
+    const perLot = (Number(ipo.lotSize)||0) * (Number(ipo.priceHigh)||0);
+    const lots = perLot > 0 ? Math.floor(total/perLot) : 0;
+    const status = ipo.ourStatus || "Not applied";
+    const tone = (status === "Applied" || status === "Allotted") ? "go" : (status === "Applying") ? "warm" : "";
+    const options = STATUSES.map(s => '<option' + (s === status ? ' selected' : '') + '>' + s + '</option>').join("");
+    return '<tr>' +
+      '<td data-label="IPO"><strong>' + esc(ipo.name) + '</strong><span class="sub">' + esc(ipo.segment||"") +
+        ' · <a class="hist" href="' + esc(refLink(ipo)) + '" target="_blank" rel="noopener">Details &#8599;</a></span></td>' +
+      '<td data-label="Window" class="num">' + prettyDate(ipo.opens) + ' – ' + prettyDate(ipo.closes) + '</td>' +
+      '<td data-label="Status"><span class="pill ' + phase.key + '">' + esc(phase.label) + '</span></td>' +
+      '<td data-label="Price band" class="num">₹' + (ipo.priceLow||0) + '–' + (ipo.priceHigh||0) + '</td>' +
+      '<td data-label="Lot" class="num">' + (Number(ipo.lotSize)||0).toLocaleString("en-IN") + '<span class="sub">shares</span></td>' +
+      '<td data-label="Cost per lot" class="num">' + rupees(perLot) + '</td>' +
+      '<td data-label="Lots we can fund" class="num">' + (perLot > 0 ? lots + (lots === 1 ? ' lot' : ' lots') : '—') + '</td>' +
+      '<td data-label="Applied / applying"><select class="status" data-tone="' + tone + '" data-ipo="' + idx + '"' + (EDIT.on ? '' : ' disabled') + '>' + options + '</select></td>' +
+      '<td data-label="" class="owner-only"><button class="rm" data-remove-ipo="' + idx + '" aria-label="Remove ' + esc(ipo.name) + '">&times;</button></td>' +
+    '</tr>';
+  }).join("");
+}
+
+function renderAll(){
+  if (!DATA) return;
+  document.body.classList.toggle("editing", EDIT.on);
+  renderPool(); renderInvestors(); renderIpos();
+  $("asOf").textContent = "Private ledger · " + today().toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"}) + (EDIT.on ? " · editing on" : " · read only");
+  $("lockBtn").textContent = EDIT.on ? "Editing on — lock again" : "Editing locked — unlock";
+}
+
+/* ── Owner unlock ────────────────────────────────────────────── */
+$("lockBtn").addEventListener("click", () => {
+  if (EDIT.on){ EDIT.on = false; $("lockMsg").textContent = ""; $("lockForm").hidden = true; renderAll(); return; }
+  const f = $("lockForm"); f.hidden = !f.hidden;
+  if (!f.hidden) $("lockPass").focus();
+});
+$("lockForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  if (await sha256($("lockPass").value) === PASS_HASH){
+    EDIT.on = true; $("lockForm").hidden = true; $("lockPass").value = "";
+    $("lockMsg").textContent = "Unlocked."; renderAll();
+  } else { $("lockMsg").textContent = "Wrong passphrase."; $("lockPass").select(); }
+});
+
+/* ── Editing ─────────────────────────────────────────────────── */
+$("addInvestor").addEventListener("click", () => {
+  if (!EDIT.on) return;
+  const code = $("iCode").value.trim().toUpperCase(), amount = Number($("iAmt").value);
+  if (!code){ $("iCode").focus(); return; }
+  if (!(amount > 0)){ $("iAmt").focus(); return; }
+  DATA.investors.push({ code, amount, joined: $("iDate").value || todayISO(), note: $("iNote").value.trim() });
+  ["iCode","iAmt","iNote"].forEach(id => $(id).value = "");
+  renderAll();
+});
+$("addIpo").addEventListener("click", () => {
+  if (!EDIT.on) return;
+  const name = $("pName").value.trim();
+  if (!name){ $("pName").focus(); return; }
+  DATA.ipos.push({ name, segment: $("pSeg").value, opens: $("pOpen").value, closes: $("pClose").value,
+    priceLow: Number($("pLow").value)||0, priceHigh: Number($("pHigh").value)||0,
+    lotSize: Number($("pLot").value)||0, ourStatus: "Not applied", link: $("pUrl").value.trim() });
+  ["pName","pOpen","pClose","pLow","pHigh","pLot","pUrl"].forEach(id => $(id).value = "");
+  renderAll();
+});
+document.addEventListener("click", e => {
+  const sp = e.target.closest("[data-split]");
+  if (sp && EDIT.on){ DATA.returnSplit = sp.dataset.split; renderAll(); return; }
+  if (!EDIT.on) return;
+  const ri = e.target.closest("[data-remove-investor]");
+  if (ri){ DATA.investors.splice(Number(ri.dataset.removeInvestor),1); renderAll(); return; }
+  const rp = e.target.closest("[data-remove-ipo]");
+  if (rp){ DATA.ipos.splice(Number(rp.dataset.removeIpo),1); renderAll(); }
+});
+document.addEventListener("change", e => {
+  if (!EDIT.on) return;
+  const sel = e.target.closest("select.status");
+  if (sel){ DATA.ipos[Number(sel.dataset.ipo)].ourStatus = sel.value; renderAll(); }
+});
+
+/* ── Export ──────────────────────────────────────────────────── */
+$("copyData").addEventListener("click", async () => {
+  const pass = $("newPass").value.trim() || VIEW_PASS;
+  const toast = $("toast"), box = $("dataOut");
+  toast.style.color = "var(--ink-soft)"; toast.textContent = "Encrypting…";
+  try {
+    const payload = await encryptRecords(pass, DATA);
+    const line = 'const ENCRYPTED = "' + payload + '";';
+    box.hidden = false; box.value = line;
+    try { await navigator.clipboard.writeText(line); toast.style.color = "var(--moss)"; toast.textContent = "Copied — paste it over the ENCRYPTED line in index.html"; }
+    catch { box.select(); toast.style.color = "var(--moss)"; toast.textContent = "Select the text below and copy it"; }
+    if ($("newPass").value.trim()) toast.textContent += " · new passphrase applies once committed";
+  } catch (err) {
+    toast.style.color = "var(--brick)"; toast.textContent = "Could not encrypt: " + err.message;
+  }
+});
+</script>
+</body>
+</html>
